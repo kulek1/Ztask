@@ -12,6 +12,7 @@ Check out the demo here: [Link](http://www.ztask.mkulinski.pl)
 * Register module
 * Creating groups
 * Sorting tasks
+* Responsive view
 
 ## Build Setup
 
@@ -28,6 +29,6 @@ npm run build
 ```
 
 ## License 
-Free for personal use
+Free for personal use <br />
 Commercial use forbidden
 
