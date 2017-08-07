@@ -1,4 +1,4 @@
-![Header](http://ztask.mkulinski.pl/github.jpg)
+![Header](http://ztask.mkulinski.pl/github-kulek1.jpg)
 # Ztask
 
 > Development version of single-page application where you can manage tasks with your coworkers. 
