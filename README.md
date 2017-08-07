@@ -1,3 +1,4 @@
+![Header](http://ztask.mkulinski.pl/github.jpg)
 # Ztask
 
 > Development version of single-page application where you can manage tasks with your coworkers. 
