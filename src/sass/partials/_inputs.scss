@@ -1,0 +1,23 @@
+input {
+  border-radius: 1em;
+  border: 1px solid $gray-thin;
+  outline: 0;
+  padding: 0 10px;
+  color: $gray-strong;
+  height: 30px;
+}
+
+.material-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid $green-action;
+  outline: 0;
+  color: $gray-strong;
+  min-width: 100px;
+  max-width: 100%;
+  border-radius: 0;
+
+  &::placeholder {
+    color: $gray;
+  }
+}

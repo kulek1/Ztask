@@ -1,0 +1,13 @@
+.page {
+  margin-left: 300px;
+
+  &__content {
+    padding: 40px;
+  }
+  &__header {
+    padding-bottom: 40px;
+    h4 {
+      color: $gray;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.icon {
+  border: 0;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  i {
+    font-size: 1.42857142em;
+    padding: 5px 0;
+  }
+  &.delete-icon {
+    border-radius: 4px;
+    &:hover {
+      background: $red;
+      color: #fff;
+    }
+    i {
+      vertical-align: middle;
+    }
+  }
+}

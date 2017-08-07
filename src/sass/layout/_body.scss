@@ -1,0 +1,29 @@
+@import url("#{$base-font-url}");
+
+body {
+  background: $primary-bg;
+  font-family: $base-font-family;
+  font-size: $base-font-size;
+  font-weight: $regular;
+  color: $gray-strong;
+}
+
+h4 {
+  font-size: 1.1428571428em;
+}
+
+p {
+  color: $gray;
+}
+
+a {
+  &:hover, &:focus, &:active {
+    outline: 0;
+  }
+}
+
+button {
+  &:hover, &:focus, &:active {
+    outline: 0;
+  }
+}

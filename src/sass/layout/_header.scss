@@ -1,0 +1,24 @@
+.header {
+  height: 80px;
+  border-bottom: 1px solid $gray-thin;
+  padding: 20px 40px 20px;
+  &__date {
+    color: $gray;
+    font-weight: $semibold;
+    font-size: 1.1428571428em;
+    padding-top: 7px;
+    i {
+      color: $green-action;
+      vertical-align: bottom;
+      padding-right: 20px;
+    }
+  }
+  &__functions {
+    text-align: right;
+    i {
+      color: $gray;
+      vertical-align: middle;
+      padding-right: 20px;
+    }
+  }
+}

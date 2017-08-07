@@ -1,0 +1,65 @@
+.tasklist {
+  ul {
+    list-style: none;
+    padding: 0;
+    & li {
+      border-bottom: 1px solid $gray-thin;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease-in-out;
+      p {
+        margin-bottom: 0;
+      }
+      &.item--completed {
+        background: rgba(108, 195, 125, 0.1);
+      }
+      .tasklist__avatar {
+        display: inline-block;
+        padding-right: 20px;
+        max-width: 50%;
+        position: relative;
+        img{
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+        }
+        a {
+          &:hover {
+            .complete-task {
+              opacity: 1;
+            }
+          }
+          .complete-task {
+            background: rgba(89, 178, 106, 0.6);
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            top: 0;
+            border-radius: 50%;
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            i {
+              max-width: 60%;
+            };
+            &--completed {
+              opacity: 1;
+              background: $green-action;
+            }
+          }
+        }
+      }
+      .tasklist__name {
+        display: inline-block;
+      }
+      .tasklist__delete {
+        position: absolute;
+        right: 45px;
+      }
+    }
+  }
+}

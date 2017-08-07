@@ -1,0 +1,32 @@
+.searchbox__container {
+  outline: 0;
+  padding: 0 10px;
+  position: relative;
+  max-width: 250px;
+  &:hover, &:focus {
+    &:before {
+      color: $green-action;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+  &:before {
+    font-family: 'Material Icons';
+    content: '\E8B6';
+    color: $gray;
+    position: absolute;
+    left: 20px;
+    font-size: 1.4285714em;
+  }
+  input#search {
+    border: 1px solid $gray;
+    width: 100%;
+    padding: 0 10px 0 40px;
+    transition: all 0.3s ease-in-out;
+    &::placeholder {
+      color: $gray;
+    }
+    &:hover, &:focus {
+      border-color: $green-action;
+    }
+  }
+}
