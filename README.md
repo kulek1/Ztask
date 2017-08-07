@@ -3,13 +3,13 @@
 > Development version of single-page application where you can manage tasks with your coworkers. 
 It's been written in Vue.js 2.0
 
-### Demo
+### Live demo
 Check out the demo here: [Link](http://www.ztask.mkulinski.pl)
 
 ## Features in the near future
 
 * JWT Authorization 
-* Register module
+* Registration module
 * Creating groups
 * Sorting tasks
 * Responsive view
