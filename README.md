@@ -10,7 +10,8 @@ Check out the demo here: [Link](http://www.ztask.mkulinski.pl)
 ## Tech Stack
 
 * OAuth Authorization 
-* Laravel API
+* REST API
+* Laravel (backend)
 * Vuex
 * VueRouter
 
