@@ -1,6 +1,6 @@
 @import url("#{$base-font-url}");
 
-body {
+body,html {
   background: $primary-bg;
   font-family: $base-font-family;
   font-size: $base-font-size;
@@ -19,6 +19,7 @@ p {
 a {
   &:hover, &:focus, &:active {
     outline: 0;
+    text-decoration: none;
   }
 }
 

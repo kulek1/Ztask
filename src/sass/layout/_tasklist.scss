@@ -59,6 +59,9 @@
       .tasklist__delete {
         position: absolute;
         right: 45px;
+        button {
+          cursor: pointer;
+        }
       }
     }
   }

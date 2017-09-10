@@ -1,0 +1,26 @@
+.dropdown-menu {
+  padding: 0;
+  left: -20px;
+  margin-top: 5px;
+  a {
+    color: $gray-strong;
+  }
+  li {
+    text-align: center;
+    a {
+        height: 100%;
+        width: 100%;
+        display: block;
+        padding: 10px;        
+    }
+    &:hover {
+      background: $gray-thin;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray;
+    }
+  }
+  &.show {
+      display: block;
+  }
+}

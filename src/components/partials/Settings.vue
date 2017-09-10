@@ -9,7 +9,7 @@
                 <div class="col-md-1">
                     <label>Name:</label>
                 </div>
-                <div class="col-md-6"> 
+                <div class="col-md-6">
                     <input type="text" v-model="changeFullname" maxlength="30">
                 </div>
             </div>
@@ -22,37 +22,51 @@
                 </div>
             </div>
             <div class="settings__buttons">
-                <router-link to="/"><a href class="btn btn-secondary">Cancel</a></router-link>
-                <router-link to="/"><a href class="btn btn-primary">Save</a></router-link>
+                <router-link to="/">
+                    <a href class="btn btn-secondary">Cancel</a>
+                </router-link>
+                <router-link to="/">
+                    <a href class="btn btn-primary">Save</a>
+                </router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-  export default {
-    props: ['fullName', 'profession'],
-    methods: {},
-    beforeMount () {
-      this.$emit('isOpen')
-    },
-    computed: {
-      changeFullname: {
-        get: function () {
-          return this.fullName
-        },
-        set: function (value) {
-          this.$emit('changeName', value)
-        }
+import { mapState, mapGetters } from 'vuex'
+
+export default {
+  props: ['fullName', 'profession'],
+  methods: {},
+  beforeMount () {
+    this.$store.dispatch('settingsWindow', 'open')
+  },
+  computed: {
+    ...mapState({
+      authStore: state => state.authStore,
+      mainStore: state => state.mainStore
+    }),
+    ...mapGetters([
+      'getFullname',
+      'getProfession'
+    ]),
+    changeFullname: {
+      get: function () {
+        return this.getFullname
       },
-      changeProfession: {
-        get: function () {
-          return this.profession
-        },
-        set: function (value) {
-          this.$emit('changeProfession', value)
-        }
+      set: function (value) {
+        this.$store.dispatch('setFullname', value)
+      }
+    },
+    changeProfession: {
+      get: function () {
+        return this.getProfession
+      },
+      set: function (value) {
+        this.$store.dispatch('setProfession', value)
       }
     }
   }
+}
 </script>

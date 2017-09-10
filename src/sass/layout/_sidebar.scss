@@ -26,6 +26,13 @@
       border-radius: 50%;
       margin: 0 auto;
       position: relative;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        background: $gray;
+        img {
+          opacity: .9;
+        }
+      }
       img {
         width: calc(100% - 14px);
         height: calc(100% - 14px);
@@ -47,5 +54,66 @@
   }
   &__searchbox {
     margin-top: 40px;
+  }
+  &__filterbox {
+    margin: 40px 80px;
+    .filterbox__header {
+      padding: 8px 0;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        position: relative;
+        border-radius: 1rem;
+        font-size: 0.9285rem;
+        margin-top: 8px;
+        padding: 5px 0 7px;
+        border: 1px solid #fff;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          color: #fff;
+        }
+        &.active {
+          color: #fff;
+          &::before {
+            font-family: 'Material Icons';
+            content: '\E876';
+            position: absolute;
+            left: 12px;
+            top: 4.5px;
+            font-size: 1rem;
+          }
+        }
+        &.danger {
+          border-color: $red;
+          &.active {
+            background: $red;
+          }
+          &:hover {
+            background: darken($red, 0.4);
+          }
+        }
+        &.warning {
+          border-color: $yellow;
+          &.active {
+            background: $yellow;
+          }
+          &:hover {
+            background: darken($yellow, 0.4);
+          }
+        }
+        &.info {
+          border-color: $blue;
+          &.active {
+            background: $blue;
+          }
+          &:hover {
+            background: darken($blue, 0.4);
+          }
+        }
+      }
+    }
   }
 }
