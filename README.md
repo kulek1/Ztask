@@ -48,6 +48,5 @@ npm run build
 ```
 
 ## License 
-Free for personal use <br />
-Commercial use forbidden
+- 
 
