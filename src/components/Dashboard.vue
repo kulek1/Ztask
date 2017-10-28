@@ -1,42 +1,45 @@
 <template>
   <div id="app">
-    <sidebar-vue @searchInput="searchArray($event)"></sidebar-vue>
+    <main-sidebar @searchInput="searchArray($event)"/>
     <div class="page">
-      <header-vue @addRow="fireAddRow($event)"></header-vue>
-      <tasklist v-if="!this.isSettingsWindow" :tasks="tasks" @addTask="fireAddTask($event)"></tasklist>
-      <router-view @changeName="changeFullname($event) " @changeProfession="changeProfession($event) "></router-view>
+      <main-header @addRow="fireAddRow($event)"/>
+      <task-list v-if="!this.isSettingsWindow" :tasks="tasks" @addTask="fireAddTask($event)"/>
+      <router-view @changeName="changeFullname($event) " @changeProfession="changeProfession($event) "/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import { apiUrl } from '../../env'
-import Header from './partials/Header.vue'
-import Sidebar from './partials/Sidebar.vue'
-import TaskList from './partials/TaskList.vue'
-import Settings from './partials/Settings.vue'
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { apiUrl } from '@/../env';
+import MainHeader from './partials/MainHeader.vue';
+import MainSidebar from './partials/MainSidebar.vue';
+import TaskList from './partials/TaskList.vue';
+import Settings from './partials/Settings.vue';
 
 export default {
   name: 'app',
   components: {
-    'header-vue': Header,
-    'sidebar-vue': Sidebar,
-    'tasklist': TaskList,
-    'settings': Settings
+    MainHeader,
+    MainSidebar,
+    TaskList,
+    Settings
   },
   data () {
     return {
       tasks: []
-    }
+    };
   },
   methods: {
+    ...mapActions(['setFullname', 'setProfession', 'settingsWindow']),
+    ...mapActions('auth', ['setAuthUser']),
+    ...mapActions('task', ['setTasks']),
     fireAddTask (taskName) {
-      const USER_ID = this.authStore.authUser.id
-      const self = this
+      const USER_ID = this.authStore.authUser.id;
+      const self = this;
 
       if (this.isSound) {
-        this.playSound()
+        this.playSound();
       }
       let addData = {
         name: taskName,
@@ -44,52 +47,59 @@ export default {
         author: USER_ID,
         type: 'normal',
         done: '0'
-      }
-      this.$http.post(apiUrl + 'addtask', addData).then(response => {
-        // wait for id from mysql
-        self.newNameOfTask = ''
-        self.isCreating = false
-        this.tasks.push({ id: parseInt(response.body), name: taskName, description: ' ', author: this.fullName, type: 'normal', done: 0 })
-      }, response => {
-        console.log('error')
-      })
+      };
+      this.$http.post(apiUrl + 'addtask', addData).then(
+        response => {
+          // wait for id from mysql
+          self.newNameOfTask = '';
+          self.isCreating = false;
+          this.tasks.push({
+            id: parseInt(response.body),
+            name: taskName,
+            description: ' ',
+            author: this.fullName,
+            type: 'normal',
+            done: 0
+          });
+        },
+        response => {
+          console.log('error');
+        }
+      );
     },
     getAccountData () {
-      this.$store.dispatch('setFullname', this.authStore.authUser.name)
-      this.$store.dispatch('setProfession', this.authStore.authUser.profession)
+      this.setFullname(this.authUser.name);
+      this.setProfession(this.authUser.profession);
     },
     getUserTaskList () {
-      this.$http.get(apiUrl + 'getUserTasks/' + this.authStore.authUser.id).then(response => {
-        this.$store.dispatch('setTasks', response.body)
-      })
+      this.$http
+        .get(apiUrl + 'getUserTasks/' + this.authUser.id)
+        .then(response => {
+          this.setTasks(response.body);
+        });
     }
   },
   watch: {
-    '$route' (from, to) {
+    $route (from, to) {
       if (from.path === '/settings') {
-        this.$store.dispatch('settingsWindow', 'open')
+        this.settingsWindow('open');
       } else if (from.path === '/') {
-        this.$store.dispatch('settingsWindow', 'close')
+        this.settingsWindow('close');
       }
     }
   },
   computed: {
-    ...mapState({
-      authStore: state => state.authStore,
-      mainStore: state => state.mainStore
-    }),
-    ...mapGetters([
-      'isSettingsWindow'
-    ])
+    ...mapState('auth', ['authUser']),
+    ...mapGetters(['isSettingsWindow'])
   },
   created () {
-    const userObj = JSON.parse(window.localStorage.getItem('authUser'))
-    this.$store.dispatch('setUserObject', userObj)
+    const userObj = JSON.parse(window.localStorage.getItem('authUser'));
+    this.setAuthUser(userObj);
 
-    this.getAccountData()
-    this.getUserTaskList()
+    this.getAccountData();
+    this.getUserTaskList();
   }
-}
+};
 </script>
 
 

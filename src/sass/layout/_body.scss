@@ -1,11 +1,15 @@
 @import url("#{$base-font-url}");
 
-body,html {
+body, html {
   background: $primary-bg;
   font-family: $base-font-family;
   font-size: $base-font-size;
   font-weight: $regular;
   color: $gray-strong;
+
+  .fullpage {
+    height: 100%;
+  }
 }
 
 h4 {

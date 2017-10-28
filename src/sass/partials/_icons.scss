@@ -1,19 +1,23 @@
 .icon {
   border: 0;
   color: white;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease;
+  border-radius: 4px;
   i {
     font-size: 1.42857142em;
     padding: 5px 0;
+    vertical-align: middle;
   }
-  &.delete-icon {
-    border-radius: 4px;
+  &.icon--delete {
     &:hover {
       background: $red;
       color: #fff;
     }
-    i {
-      vertical-align: middle;
+  }
+  &.icon--edit {
+    &:hover {
+      background: $green-action;
+      color: #fff;
     }
   }
 }

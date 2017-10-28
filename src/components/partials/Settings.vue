@@ -34,39 +34,38 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
   props: ['fullName', 'profession'],
-  methods: {},
+  methods: {
+    ...mapActions(['settingsWindow', 'setFullname', 'getProfession'])
+  },
   beforeMount () {
-    this.$store.dispatch('settingsWindow', 'open')
+    this.settingsWindow('open');
   },
   computed: {
     ...mapState({
       authStore: state => state.authStore,
       mainStore: state => state.mainStore
     }),
-    ...mapGetters([
-      'getFullname',
-      'getProfession'
-    ]),
+    ...mapGetters(['getFullname', 'getProfession']),
     changeFullname: {
       get: function () {
-        return this.getFullname
+        return this.getFullname;
       },
       set: function (value) {
-        this.$store.dispatch('setFullname', value)
+        this.setFullname(value);
       }
     },
     changeProfession: {
       get: function () {
-        return this.getProfession
+        return this.getProfession;
       },
       set: function (value) {
-        this.$store.dispatch('setProfession', value)
+        this.setProfession(value);
       }
     }
   }
-}
+};
 </script>

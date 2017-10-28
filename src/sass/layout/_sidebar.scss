@@ -72,6 +72,8 @@
         padding: 5px 0 7px;
         border: 1px solid #fff;
         transition: all 0.2s ease-in-out;
+        color: #fff;
+        cursor: pointer;
         &:hover {
           color: #fff;
         }
@@ -88,30 +90,15 @@
         }
         &.danger {
           border-color: $red;
-          &.active {
-            background: $red;
-          }
-          &:hover {
-            background: darken($red, 0.4);
-          }
+          background: $red;
         }
         &.warning {
           border-color: $yellow;
-          &.active {
-            background: $yellow;
-          }
-          &:hover {
-            background: darken($yellow, 0.4);
-          }
+          background: $yellow;
         }
         &.info {
           border-color: $blue;
-          &.active {
-            background: $blue;
-          }
-          &:hover {
-            background: darken($blue, 0.4);
-          }
+          background: $blue;
         }
       }
     }

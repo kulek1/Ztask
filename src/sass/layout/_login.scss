@@ -1,0 +1,97 @@
+.auth-content {
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  button {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 5px 30px;
+    border-radius: 2px;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background: #fff;
+        color: #202020;
+    }
+    &.btn-solid {
+        background: #fff;
+        color: #202020;
+        }
+    }
+    input {
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid #48a55b;
+        border-radius: 0;
+        color: #fff;
+        &:hover, &:focus {
+            background: transparent;
+            border-color: #fff;
+        }
+    }
+    > .row {
+        height: 100%;
+       [class*="col-"] {
+           padding: 0;
+       }
+    }
+    .auth-content__center {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100%;
+        color: #fff;
+    }
+    &__left {
+        background: #202020;
+        height: 100%;
+
+        .auth-content__center {
+            margin-left: 60px;
+            h1 {
+                font-weight: 300;
+                font-size: 3rem;
+            }
+            h4 {
+                font-weight: 300;
+            }
+
+            .buttons {
+                margin-top: 40px;
+                button:first-child {
+                    margin-right: 15px;
+                }
+            }
+        }
+    }
+    &__right {
+        background: $green-action;
+        height: 100%;
+        .auth-content__center {
+            justify-content: center;
+            padding: 0 20px;
+            p {
+                color: #3f7a4b;
+            }
+            form {
+                margin-top: 40px;
+                input {
+                    &::-webkit-input-placeholder {
+                        color:#3b7646;
+                    }
+                    &:focus {
+                        color: #fff;
+                    }
+                }
+                .btn-login {
+                    background: #3b7646;
+                    border-color: #3b7646;
+                    color: #fff;
+                }
+            }
+            .alert {
+                margin-top: 15px;
+            }
+        }
+    }
+}
+

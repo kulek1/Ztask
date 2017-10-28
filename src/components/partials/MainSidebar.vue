@@ -44,63 +44,66 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { bus } from '../../eventbus'
+import { mapGetters, mapActions } from 'vuex';
+import { bus } from '../../eventbus';
 
 export default {
+  name: 'MainSidebar',
   data () {
     return {
       search: ''
-    }
+    };
   },
   methods: {
+    ...mapActions(['toggleSound', 'settingsWindow']),
+    ...mapActions(['clearAuthUser']),
     toggleSound () {
       if (this.$refs.volumeIcon.innerText === 'volume_up') {
-        this.$refs.volumeIcon.innerText = 'volume_off'
+        this.$refs.volumeIcon.innerText = 'volume_off';
       } else {
-        this.$refs.volumeIcon.innerText = 'volume_up'
+        this.$refs.volumeIcon.innerText = 'volume_up';
       }
-      this.$store.dispatch('toggleSound')
+      this.toggleSound();
     },
     openSettings () {
-      this.$store.dispatch('settingsWindow', 'open')
+      this.settingsWindow('open');
     },
     logout () {
-      this.$store.dispatch('clearAuthUser')
-      window.localStorage.removeItem('authUser')
+      this.clearAuthUser();
+      window.localStorage.removeItem('authUser');
       this.$router.push({
         name: 'Login'
-      })
+      });
     }
   },
   watch: {
     search: function () {
-      bus.$emit('searchInput', this.search)
+      bus.$emit('searchInput', this.search);
     }
   },
   created: function () {
     bus.$on('resetSearchInput', () => {
-      this.search = ''
-    })
+      this.search = '';
+    });
   },
   mounted: function () {
-    let self = this
+    let self = this;
 
     // filter status
     this.$refs.filterStatus.addEventListener('click', function (e) {
-      e.target.classList.toggle('active')
-    })
+      e.target.classList.toggle('active');
+    });
 
     // Dropdown menu
     this.$refs.toggleDropdown.addEventListener('click', function (e) {
-      self.$refs.toggleDropdown.getElementsByTagName('ul').item(0).classList.toggle('show')
-    })
+      self.$refs.toggleDropdown
+        .getElementsByTagName('ul')
+        .item(0)
+        .classList.toggle('show');
+    });
   },
   computed: {
-    ...mapGetters([
-      'getFullname',
-      'getProfession'
-    ])
+    ...mapGetters(['getFullname', 'getProfession'])
   }
-}
+};
 </script>

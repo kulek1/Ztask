@@ -15,7 +15,10 @@
           <p class="tasklist__author">by {{ task.author }}</p>
         </div>
         <div class="tasklist__delete">
-          <button v-on:click="removeRow(index, task.id)" class="icon delete-icon">
+          <button v-on:click="editRow(index, task.id)" class="icon icon--edit">
+            <i class="material-icons">edit</i>
+          </button>
+          <button v-on:click="removeRow(index, task.id)" class="icon icon--delete">
             <i class="material-icons">delete</i>
           </button>
         </div>
@@ -37,11 +40,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import { bus } from '../../eventbus'
-import noAvatar from '../../assets/noavatar.png'
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { bus } from '../../eventbus';
+import noAvatar from '../../assets/noavatar.png';
 
 export default {
+  name: 'TaskList',
   data () {
     return {
       newTaskName: '',
@@ -49,56 +53,50 @@ export default {
       inputSize: 0,
       phraseSearch: '',
       imgPlaceholder: noAvatar
-    }
+    };
   },
   methods: {
-    console (demo) {
-      console.log(demo)
-    },
+    ...mapActions('task', ['addTask', 'removeTask', 'setTaskDone']),
     submitForm () {
-      const USER_ID = this.authStore.authUser.id
-      let fullName = this.getFullname
-      let taskName = this.newTaskName
-      let isSound = this.isSound
-      this.$store.dispatch('addTask', { taskName, fullName, USER_ID, isSound })
+      const USER_ID = this.authUser.id;
+      let fullName = this.getFullname;
+      let taskName = this.newTaskName;
+      let isSound = this.isSound;
+      this.addTask({ taskName, fullName, USER_ID, isSound });
 
-      this.newTaskName = ''
+      this.newTaskName = '';
     },
     removeRow (index, id) {
-      this.$store.dispatch('removeTask', { index, id })
+      this.removeTask({ index, id });
     },
     markDone (index, id) {
-      this.$store.dispatch('setTaskDone', index)
+      this.setTaskDone(index);
     },
     resizeInput () {
-      let element = this.$refs.dynamicSize
-      let length = element.value.length
+      let element = this.$refs.dynamicSize;
+      let length = element.value.length;
       if (length > 20) {
-        element.size = length
+        element.size = length;
       } else {
-        element.size = 20
+        element.size = 20;
       }
     }
   },
   computed: {
+    ...mapState('auth', ['authUser']),
+    ...mapGetters(['getFullname', 'isSound']),
+    ...mapGetters('task', ['getTasks', 'isCreatingNewTask']),
+
     filteredTasks: function () {
-      console.log(this.getTasks)
-      return this.getTasks.filter(task => task.name.toLowerCase().includes(this.phraseSearch.toLowerCase()))
-    },
-    ...mapState({
-      authStore: state => state.authStore
-    }),
-    ...mapGetters([
-      'isCreatingNewTask',
-      'getTasks',
-      'getFullname',
-      'isSound'
-    ])
+      return this.getTasks.filter(task =>
+        task.name.toLowerCase().includes(this.phraseSearch.toLowerCase())
+      );
+    }
   },
   created: function () {
-    bus.$on('searchInput', (data) => {
-      this.phraseSearch = data
-    })
+    bus.$on('searchInput', data => {
+      this.phraseSearch = data;
+    });
   }
-}
+};
 </script>

@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import VueResource from 'vue-resource'
-import store from './store'
+import store from './store/'
 
 Vue.use(BootstrapVue)
 Vue.use(VueResource)
