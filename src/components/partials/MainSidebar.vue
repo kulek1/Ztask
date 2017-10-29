@@ -16,7 +16,7 @@
             <a href="#">Change Avatar</a>
           </li>
           <li>
-            <a href="#" @click="logout()">Logout</a>
+            <a href="#" @click.stop="logout()">Logout</a>
           </li>
         </ul>
       </div>
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions(['toggleSound', 'settingsWindow']),
-    ...mapActions(['clearAuthUser']),
+    ...mapActions('auth', ['clearAuthUser']),
     toggleSound () {
       if (this.$refs.volumeIcon.innerText === 'volume_up') {
         this.$refs.volumeIcon.innerText = 'volume_off';
@@ -77,16 +77,16 @@ export default {
     }
   },
   watch: {
-    search: function () {
+    search () {
       bus.$emit('searchInput', this.search);
     }
   },
-  created: function () {
+  created () {
     bus.$on('resetSearchInput', () => {
       this.search = '';
     });
   },
-  mounted: function () {
+  mounted () {
     let self = this;
 
     // filter status

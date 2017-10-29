@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import { apiUrl } from '@/../env'
+import api from '@/helpers/apiConnection'
 
 const taskActions = {
     setTasks: ({ commit }, tasks) => {
@@ -11,28 +10,43 @@ const taskActions = {
     addRow: ({ commit }) => {
         commit('addRow')
     },
-    addTask: ({ commit }, data) => {
-        const self = this
-        let addData = {
+    async addTask({ commit }, data) {
+        const addData = {
             name: data.taskName,
             description: 'none',
             author: data.USER_ID,
             type: 'normal',
             done: false
         }
-        Vue.http.post(apiUrl + 'addtask', addData).then(response => {
+        try {
+            const request = await api.post('/addtask/', addData);
+            const response = request.data
             // wait for id from mysql
             data.taskId = parseInt(response.body)
-            console.log(data)
             commit('addTask', data)
-
-        }, response => {
-            console.log('error')
-        })
-
+        } catch (error) {
+            console.log(error.response.status)
+        }
     },
-    removeTask: ({ commit }, data) => {
-        commit('removeTask', data)
+    async removeTask({ commit }, data) {
+        const removeData = {
+            task_id: data.id
+        }
+        try {
+            const request = await api.post('/removeTask/', removeData);
+            commit('removeTask', data)
+        } catch (error) {
+            console.log(error.response.status)
+        }
+    },
+    async getUserTasks({ commit }, userId) {
+        try {
+            const request = await api.get(`/getUserTasks/${userId}`, {});
+            const data = request.data;
+            commit('setTasks', data)
+        } catch (error) {
+            console.log(error.response.status)
+        }
     }
 };
 

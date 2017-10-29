@@ -1,22 +1,33 @@
 .auth-content {
   height: 100vh;
   font-family: 'Open Sans', sans-serif;
-  button {
+  .loader {
+    height: 28px;
+  }
+  .btn {
     background: transparent;
     border: 1px solid #fff;
     color: #fff;
-    padding: 5px 30px;
+    padding: 10px 30px;
     border-radius: 2px;
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
     &:hover {
         background: #fff;
         color: #202020;
+    }
+    &:focus {
+        box-shadow: none;
     }
     &.btn-solid {
         background: #fff;
         color: #202020;
         }
     }
+    &.btn-loading {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    } 
     input {
         background: transparent;
         border: 0;
@@ -86,10 +97,14 @@
                     background: #3b7646;
                     border-color: #3b7646;
                     color: #fff;
+                    position: relative;
+                    min-height: 50px;
                 }
             }
             .alert {
                 margin-top: 15px;
+                text-align: center;
+                @include font-size(13px);
             }
         }
     }

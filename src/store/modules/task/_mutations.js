@@ -1,3 +1,4 @@
+import Vue from 'Vue';
 import notificationSound from '@/assets/notification.mp3'
 const taskMutations = {
     setTasks(state, tasks) {
@@ -28,10 +29,6 @@ const taskMutations = {
         state.isCreatingNewTask = false
     },
     removeTask(state, data) {
-        let removeData = {
-            task_id: data.id
-        }
-        Vue.http.post(apiUrl + 'removeTask', removeData).then(response => { })
         state.tasks.splice(data.index, 1)
     }
 };

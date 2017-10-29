@@ -59,9 +59,9 @@ export default {
     ...mapActions('task', ['addTask', 'removeTask', 'setTaskDone']),
     submitForm () {
       const USER_ID = this.authUser.id;
-      let fullName = this.getFullname;
-      let taskName = this.newTaskName;
-      let isSound = this.isSound;
+      const fullName = this.getFullname;
+      const taskName = this.newTaskName;
+      const isSound = this.isSound;
       this.addTask({ taskName, fullName, USER_ID, isSound });
 
       this.newTaskName = '';
