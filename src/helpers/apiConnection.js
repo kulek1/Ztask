@@ -6,6 +6,7 @@ class Api {
     constructor() {
         this.resource = axios.create({
             baseURL: apiUrl,
+            // withCredentials: true,
             // auth: httpAuth,
         });
     }

@@ -6,8 +6,6 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import store from './store/'
 
-Vue.use(BootstrapVue)
-
 Vue.config.productionTip = false
 
 // CSS styles
@@ -35,6 +33,6 @@ new Vue({
   store,
   template: '<App/>',
   components: {
-    App
+    App,
   }
 })

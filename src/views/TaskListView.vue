@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(task, index) in filteredTasks" :class="{ 'item--completed' : task.done }">
         <div class="tasklist__avatar">
-          <a href="" v-on:click.prevent="markDone(index, task.id)">
+          <a href="" v-on:click.prevent="fireTaskDone(index, task.uuid, task.done)">
             <img :src="imgPlaceholder">
             <div class="complete-task" :class="{ 'complete-task--completed' : task.done }">
               <i class="material-icons">done</i>
@@ -15,17 +15,17 @@
           <p class="tasklist__author">by {{ task.author }}</p>
         </div>
         <div class="tasklist__delete">
-          <button v-on:click="editRow(index, task.id)" class="icon icon--edit">
+          <button v-on:click="editRow(index, task.uuid)" class="icon icon--edit">
             <i class="material-icons">edit</i>
           </button>
-          <button v-on:click="removeRow(index, task.id)" class="icon icon--delete">
+          <button v-on:click="removeRow(index, task.uuid)" class="icon icon--delete">
             <i class="material-icons">delete</i>
           </button>
         </div>
       </li>
       <li v-if="this.isCreatingNewTask">
         <div class="tasklist__avatar">
-          <img src="../../assets/noavatar.png">
+          <img src="../assets/noavatar.png">
         </div>
         <div class="tasklist__name">
           <h4>
@@ -40,12 +40,12 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
-import { bus } from '../../eventbus';
-import noAvatar from '../../assets/noavatar.png';
+import { mapState, mapActions } from 'vuex';
+import { bus } from '@/eventbus';
+import noAvatar from '@/assets/noavatar.png';
 
 export default {
-  name: 'TaskList',
+  name: 'TaskListView',
   data () {
     return {
       newTaskName: '',
@@ -59,18 +59,26 @@ export default {
     ...mapActions('task', ['addTask', 'removeTask', 'setTaskDone']),
     submitForm () {
       const USER_ID = this.authUser.id;
-      const fullName = this.getFullname;
+      const fullName = this.fullName;
       const taskName = this.newTaskName;
       const isSound = this.isSound;
       this.addTask({ taskName, fullName, USER_ID, isSound });
 
       this.newTaskName = '';
     },
-    removeRow (index, id) {
-      this.removeTask({ index, id });
+    editRow (index, uuid) {
+      this.$router.push({ name: 'TaskView', params: { uuid: uuid } });
     },
-    markDone (index, id) {
-      this.setTaskDone(index);
+    removeRow (index, uuid) {
+      this.removeTask({ index, uuid });
+    },
+    fireTaskDone (index, uuid, isDone) {
+      const task = {
+        localIndex: index,
+        uuid: uuid,
+        done: isDone
+      };
+      this.setTaskDone(task);
     },
     resizeInput () {
       let element = this.$refs.dynamicSize;
@@ -83,17 +91,20 @@ export default {
     }
   },
   computed: {
+    ...mapState(['fullName', 'isSound']),
     ...mapState('auth', ['authUser']),
-    ...mapGetters(['getFullname', 'isSound']),
-    ...mapGetters('task', ['getTasks', 'isCreatingNewTask']),
+    ...mapState('task', ['tasks', 'isCreatingNewTask']),
 
-    filteredTasks: function () {
-      return this.getTasks.filter(task =>
+    filteredTasks () {
+      const sortedTasks = this.tasks.sort((a, b) => {
+        return a.created_at.localeCompare(b.created_at);
+      });
+      return sortedTasks.filter(task =>
         task.name.toLowerCase().includes(this.phraseSearch.toLowerCase())
       );
     }
   },
-  created: function () {
+  created () {
     bus.$on('searchInput', data => {
       this.phraseSearch = data;
     });

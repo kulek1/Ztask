@@ -3,25 +3,23 @@
     <main-sidebar @searchInput="searchArray($event)"/>
     <div class="page">
       <main-header @addRow="fireAddRow($event)"/>
-      <task-list v-if="!this.isSettingsWindow" :tasks="tasks"/>
+     <!-- <task-list v-if="!this.isSettingsWindow" :tasks="tasks"/> -->
       <router-view @changeName="changeFullname($event) " @changeProfession="changeProfession($event) "/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
-import MainHeader from './partials/MainHeader.vue';
-import MainSidebar from './partials/MainSidebar.vue';
-import TaskList from './partials/TaskList.vue';
-import Settings from './partials/Settings.vue';
+import { mapState, mapActions } from 'vuex';
+import MainHeader from '@/components/partials/MainHeader';
+import MainSidebar from '@/components/partials/MainSidebar';
+import Settings from '@/components/partials/Settings';
 
 export default {
   name: 'app',
   components: {
     MainHeader,
     MainSidebar,
-    TaskList,
     Settings
   },
   data () {
@@ -53,8 +51,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['authUser']),
-    ...mapGetters(['isSettingsWindow'])
+    ...mapState(['isSettingsWindow']),
+    ...mapState('auth', ['authUser'])
   },
   created () {
     const userObj = JSON.parse(window.localStorage.getItem('authUser'));
@@ -62,9 +60,6 @@ export default {
     this.setAuthUser(userObj);
     this.getAccountData();
     this.getUserTasks(this.authUser.id);
-  },
-  mounted () {
-    console.log(this.authUser);
   }
 };
 </script>

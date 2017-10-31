@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="sidebar__action-buttons">
-      <a href="" @click.prevent="toggleSound()">
+      <a href="" @click.prevent="fireSound()">
         <i ref="volumeIcon" class="material-icons">volume_up</i>
       </a>
       <router-link to="settings">
@@ -21,10 +21,10 @@
         </ul>
       </div>
       <div class="sidebar__fullname">
-        {{ this.getFullname }}
+        {{ user.fullName }}
       </div>
       <div class="sidebar__status">
-        {{ this.getProfession }}
+        {{ user.profession }}
       </div>
     </div>
     <div class="sidebar__searchbox">
@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { bus } from '../../eventbus';
+import { mapState, mapActions } from 'vuex';
+import { bus } from '@/eventbus';
 
 export default {
   name: 'MainSidebar',
@@ -57,7 +57,7 @@ export default {
   methods: {
     ...mapActions(['toggleSound', 'settingsWindow']),
     ...mapActions('auth', ['clearAuthUser']),
-    toggleSound () {
+    fireSound () {
       if (this.$refs.volumeIcon.innerText === 'volume_up') {
         this.$refs.volumeIcon.innerText = 'volume_off';
       } else {
@@ -103,7 +103,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(['getFullname', 'getProfession'])
+    ...mapState(['user'])
   }
 };
 </script>
