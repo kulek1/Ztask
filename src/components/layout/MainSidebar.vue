@@ -4,7 +4,7 @@
       <a href="" @click.prevent="fireSound()">
         <i ref="volumeIcon" class="material-icons">volume_up</i>
       </a>
-      <router-link to="settings">
+      <router-link :to="{ name: 'Settings' }">
         <i class="material-icons float-right">settings</i>
       </router-link>
     </div>
@@ -44,66 +44,66 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { bus } from '@/eventbus';
+import { mapState, mapActions } from 'vuex'
+import { bus } from '@/eventbus'
 
 export default {
   name: 'MainSidebar',
   data () {
     return {
       search: ''
-    };
+    }
   },
   methods: {
     ...mapActions(['toggleSound', 'settingsWindow']),
     ...mapActions('auth', ['clearAuthUser']),
     fireSound () {
       if (this.$refs.volumeIcon.innerText === 'volume_up') {
-        this.$refs.volumeIcon.innerText = 'volume_off';
+        this.$refs.volumeIcon.innerText = 'volume_off'
       } else {
-        this.$refs.volumeIcon.innerText = 'volume_up';
+        this.$refs.volumeIcon.innerText = 'volume_up'
       }
-      this.toggleSound();
+      this.toggleSound()
     },
     openSettings () {
-      this.settingsWindow('open');
+      this.settingsWindow('open')
     },
     logout () {
-      this.clearAuthUser();
-      window.localStorage.removeItem('authUser');
+      this.clearAuthUser()
+      window.localStorage.removeItem('authUser')
       this.$router.push({
         name: 'Login'
-      });
+      })
     }
   },
   watch: {
     search () {
-      bus.$emit('searchInput', this.search);
+      bus.$emit('searchInput', this.search)
     }
   },
   created () {
     bus.$on('resetSearchInput', () => {
-      this.search = '';
-    });
+      this.search = ''
+    })
   },
   mounted () {
-    let self = this;
+    let self = this
 
     // filter status
     this.$refs.filterStatus.addEventListener('click', function (e) {
-      e.target.classList.toggle('active');
-    });
+      e.target.classList.toggle('active')
+    })
 
     // Dropdown menu
     this.$refs.toggleDropdown.addEventListener('click', function (e) {
       self.$refs.toggleDropdown
         .getElementsByTagName('ul')
         .item(0)
-        .classList.toggle('show');
-    });
+        .classList.toggle('show')
+    })
   },
   computed: {
     ...mapState(['user'])
   }
-};
+}
 </script>

@@ -1,5 +1,5 @@
 const authState = {
-    authUser: null,
-};
+  authUser: null
+}
 
-export default authState;
+export default authState

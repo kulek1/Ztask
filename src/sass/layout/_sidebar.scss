@@ -27,10 +27,11 @@
       margin: 0 auto;
       position: relative;
       transition: all 0.3s ease-in-out;
+      cursor: pointer;
       &:hover {
         background: $gray;
         img {
-          opacity: .9;
+          opacity: 0.9;
         }
       }
       img {

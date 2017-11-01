@@ -1,5 +1,8 @@
 .page {
   margin-left: 300px;
+  position: absolute;
+  height: 100%;
+  width: calc(100% - 300px);
 
   &__content {
     padding: 40px;

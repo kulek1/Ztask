@@ -3,20 +3,18 @@
 @import "modules/mixins";
 
 // Partials
-@import 'partials/searchbox';
+@import "partials/searchbox";
 @import "partials/dropdown";
-@import 'partials/buttons';
-@import 'partials/inputs';
-@import 'partials/icons';
+@import "partials/buttons";
+@import "partials/inputs";
+@import "partials/icons";
+@import "partials/loader";
 // ...
 @import "layout/body";
 @import "layout/header";
 @import "layout/sidebar";
 @import "layout/page";
-@import "layout/tasklist";
+@import "layout/task-list";
+@import "layout/task-view";
 @import "layout/settings";
 @import "layout/login";
-
-// Third-party
-//@import "vendor/colorpicker";
-//@import "vendor/jquery.ui.core";

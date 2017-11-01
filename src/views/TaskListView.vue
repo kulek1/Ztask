@@ -1,8 +1,8 @@
 <template>
-  <div class="tasklist">
+  <div class="tasklist__container">
     <ul>
       <li v-for="(task, index) in filteredTasks" :class="{ 'item--completed' : task.done }">
-        <div class="tasklist__avatar">
+        <div class="task__avatar">
           <a href="" v-on:click.prevent="fireTaskDone(index, task.uuid, task.done)">
             <img :src="imgPlaceholder">
             <div class="complete-task" :class="{ 'complete-task--completed' : task.done }">
@@ -10,104 +10,114 @@
             </div>
           </a>
         </div>
-        <div class="tasklist__name">
-          <h4>{{ task.name }}</h4>
-          <p class="tasklist__author">by {{ task.author }}</p>
+        <div class="task__content">
+          <a href="" class="task__name" @click="editRow(task.uuid)">{{ task.name }}</a>
+          <p class="task__author">{{ timeAgo(task.created_at) }}</p>
         </div>
-        <div class="tasklist__delete">
-          <button v-on:click="editRow(index, task.uuid)" class="icon icon--edit">
+        <div class="task__action">
+          <button v-on:click="editRow(task.uuid)" class="icon icon--edit">
             <i class="material-icons">edit</i>
           </button>
           <button v-on:click="removeRow(index, task.uuid)" class="icon icon--delete">
-            <i class="material-icons">delete</i>
+            <i class="material-icons" v-if="loadingId !== index">delete</i>
+              <img src="../assets/preloader.svg" class="preloader--button" v-else>
           </button>
         </div>
       </li>
       <li v-if="this.isCreatingNewTask">
-        <div class="tasklist__avatar">
+        <div class="task__avatar">
           <img src="../assets/noavatar.png">
         </div>
-        <div class="tasklist__name">
+        <div class="task__content">
           <h4>
             <input class="material-input" type="text" v-on:keyup.enter="submitForm()" v-model="newTaskName" placeholder="Your task name" ref="dynamicSize" v-on:keyup="resizeInput()">
           </h4>
-          <p class="tasklist__author">by me</p>
+          <p class="task__author">by me</p>
         </div>
-        <div class="tasklist__checkbox"></div>
+        <div class="task__checkbox"></div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { bus } from '@/eventbus';
-import noAvatar from '@/assets/noavatar.png';
+import { mapState, mapActions } from 'vuex'
+import { bus } from '@/eventbus'
+import noAvatar from '@/assets/noavatar.png'
+import timeago from 'timeago.js'
 
 export default {
   name: 'TaskListView',
   data () {
     return {
+      loadingId: null,
       newTaskName: '',
       newAuthor: '',
       inputSize: 0,
       phraseSearch: '',
       imgPlaceholder: noAvatar
-    };
+    }
   },
   methods: {
     ...mapActions('task', ['addTask', 'removeTask', 'setTaskDone']),
     submitForm () {
-      const USER_ID = this.authUser.id;
-      const fullName = this.fullName;
-      const taskName = this.newTaskName;
-      const isSound = this.isSound;
-      this.addTask({ taskName, fullName, USER_ID, isSound });
+      if (this.newTaskName !== '') {
+        const USER_ID = this.authUser.id
+        const fullName = this.user.fullName
+        const taskName = this.newTaskName
+        const isSound = this.isSound
+        this.addTask({ taskName, fullName, USER_ID, isSound })
+      }
 
-      this.newTaskName = '';
+      this.newTaskName = ''
     },
-    editRow (index, uuid) {
-      this.$router.push({ name: 'TaskView', params: { uuid: uuid } });
+    editRow (uuid) {
+      this.$router.push({ name: 'TaskView', params: { uuid: uuid } })
     },
-    removeRow (index, uuid) {
-      this.removeTask({ index, uuid });
+    async removeRow (index, uuid) {
+      this.loadingId = index
+      await this.removeTask({ index, uuid })
+      this.loadingId = null
     },
     fireTaskDone (index, uuid, isDone) {
       const task = {
         localIndex: index,
         uuid: uuid,
         done: isDone
-      };
-      this.setTaskDone(task);
+      }
+      this.setTaskDone(task)
     },
     resizeInput () {
-      let element = this.$refs.dynamicSize;
-      let length = element.value.length;
+      let element = this.$refs.dynamicSize
+      let length = element.value.length
       if (length > 20) {
-        element.size = length;
+        element.size = length
       } else {
-        element.size = 20;
+        element.size = 20
       }
+    },
+    timeAgo (date) {
+      return timeago().format(date)
     }
   },
   computed: {
-    ...mapState(['fullName', 'isSound']),
+    ...mapState(['user', 'isSound']),
     ...mapState('auth', ['authUser']),
     ...mapState('task', ['tasks', 'isCreatingNewTask']),
 
     filteredTasks () {
       const sortedTasks = this.tasks.sort((a, b) => {
-        return a.created_at.localeCompare(b.created_at);
-      });
+        return a.created_at.localeCompare(b.created_at)
+      })
       return sortedTasks.filter(task =>
         task.name.toLowerCase().includes(this.phraseSearch.toLowerCase())
-      );
+      )
     }
   },
   created () {
     bus.$on('searchInput', data => {
-      this.phraseSearch = data;
-    });
+      this.phraseSearch = data
+    })
   }
-};
+}
 </script>

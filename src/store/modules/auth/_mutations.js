@@ -1,10 +1,10 @@
 const authMutations = {
-    setAuthUser(state, userObj) {
-        state.authUser = userObj;
-    },
-    clearAuthUser(state) {
-        state.authUser = null;
-    }
-};
+  setAuthUser(state, userObj) {
+    state.authUser = userObj
+  },
+  clearAuthUser(state) {
+    state.authUser = null
+  }
+}
 
-export default authMutations;
+export default authMutations

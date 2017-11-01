@@ -1,34 +1,70 @@
-@import url("#{$base-font-url}");
+@import url('#{$base-font-url}');
 
-body, html {
+body,
+html {
   background: $primary-bg;
   font-family: $base-font-family;
   font-size: $base-font-size;
   font-weight: $regular;
   color: $gray-strong;
+  height: 100%;
 
   .fullpage {
     height: 100%;
   }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  line-height: 1.5rem;
+}
+h1 {
+  font-size: 4.242rem;
+  line-height: 4.5rem;
+  margin-top: 3rem;
+}
+h2 {
+  font-size: 2.828rem;
+  line-height: 3rem;
+  margin-top: 3rem;
+}
+h3 {
+  font-size: 1.414rem;
+}
 h4 {
-  font-size: 1.1428571428em;
+  font-size: 1.1312rem;
+}
+h5 {
+  font-size: 0.707rem;
+}
+h6 {
+  font-size: 0.4713333333333333rem;
 }
 
 p {
+  margin-top: 1.5rem;
   color: $gray;
 }
 
 a {
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     outline: 0;
     text-decoration: none;
   }
 }
 
 button {
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     outline: 0;
   }
 }

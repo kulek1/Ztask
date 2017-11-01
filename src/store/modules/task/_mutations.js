@@ -1,44 +1,46 @@
-import Vue from "Vue";
-import notificationSound from "@/assets/notification.mp3";
+import Vue from 'Vue'
+import notificationSound from '@/assets/notification.mp3'
 const taskMutations = {
   setTasks(state, tasks) {
     // if host is on Linux with old mysql driver
-    let arrayLength = tasks.length;
+    let arrayLength = tasks.length
     if (arrayLength > 0) {
-      if (typeof tasks[0].done === "string") {
+      if (typeof tasks[0].done === 'string') {
         for (let i = 0; i < arrayLength; i++) {
-          tasks[i].done = parseInt(tasks[i].done);
-          tasks[i].uuid = parseInt(tasks[i].uuid);
+          tasks[i].done = parseInt(tasks[i].done)
+          tasks[i].uuid = parseInt(tasks[i].uuid)
         }
       }
     }
-    state.tasks = tasks;
+    state.tasks = tasks
   },
   setTaskDone(state, uuid) {
-    state.tasks[uuid].done = !state.tasks[uuid].done;
+    const index = state.tasks.findIndex(item => item.uuid === uuid)
+    state.tasks[index].done = !state.tasks[index].done
   },
   addRow(state) {
-    state.isCreatingNewTask = true;
+    state.isCreatingNewTask = true
   },
   addTask(state, data) {
     if (data.isSound) {
-      let audio = new Audio(notificationSound);
-      audio.play();
+      let audio = new Audio(notificationSound)
+      audio.play()
     }
     state.tasks.push({
       uuid: data.uuid,
       name: data.taskName,
-      description: " ",
+      description: ' ',
       author: data.fullName,
+      assigned_to: data.fullName,
       created_at: data.created_at,
-      type: "normal",
+      type: 'normal',
       done: false
-    });
-    state.isCreatingNewTask = false;
+    })
+    state.isCreatingNewTask = false
   },
   removeTask(state, data) {
-    state.tasks.splice(data.index, 1);
+    state.tasks.splice(data.index, 1)
   }
-};
+}
 
-export default taskMutations;
+export default taskMutations

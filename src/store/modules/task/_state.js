@@ -1,6 +1,6 @@
 const taskState = {
-    tasks: [],
-    isCreatingNewTask: false,
-};
+  tasks: [],
+  isCreatingNewTask: false
+}
 
-export default taskState;
+export default taskState

@@ -34,25 +34,22 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   props: ['fullName', 'profession'],
   methods: {
-    ...mapActions(['settingsWindow', 'setFullname', 'getProfession'])
-  },
-  beforeMount () {
-    this.settingsWindow('open');
+    ...mapActions(['setFullname', 'setProfession'])
   },
   computed: {
     ...mapState({
       authStore: state => state.authStore,
       mainStore: state => state.mainStore
     }),
-    ...mapGetters(['getFullname', 'getProfession']),
+    ...mapState(['user']),
     changeFullname: {
       get: function () {
-        return this.getFullname;
+        return this.user.fullName;
       },
       set: function (value) {
         this.setFullname(value);
@@ -60,7 +57,7 @@ export default {
     },
     changeProfession: {
       get: function () {
-        return this.getProfession;
+        return this.user.profession;
       },
       set: function (value) {
         this.setProfession(value);

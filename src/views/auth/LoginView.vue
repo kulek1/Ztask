@@ -31,7 +31,7 @@
                     <input type="password" class="form-control" placeholder="Enter your password" v-model="credentials.password">
                   </div>
                   <button class="btn btn-block btn-solid btn-login" :class="{ 'btn-loading' : isLoading }" type="submit">
-                    <img src="../assets/preloader.svg" class="loader" v-if="isLoading">
+                    <img src="../../assets/preloader.svg" class="loader" v-if="isLoading">
                     <span v-else>Login</span>
                   </button>
                 </form>
@@ -48,10 +48,11 @@
 </template>
 
 <script>
-import { clientId, clientSecret } from '../../env';
+import { clientId, clientSecret } from '@/../env';
 import { mapState, mapActions } from 'vuex';
 
 export default {
+  name: 'LoginView',
   data () {
     return {
       credentials: {

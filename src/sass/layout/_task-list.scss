@@ -1,4 +1,4 @@
-.tasklist {
+.tasklist__container {
   ul {
     list-style: none;
     padding: 0;
@@ -14,12 +14,12 @@
       &.item--completed {
         background: rgba(108, 195, 125, 0.1);
       }
-      .tasklist__avatar {
+      .task__avatar {
         display: inline-block;
         padding-right: 20px;
         max-width: 50%;
         position: relative;
-        img{
+        img {
           height: 40px;
           width: 40px;
           border-radius: 50%;
@@ -45,7 +45,7 @@
             align-items: center;
             i {
               max-width: 60%;
-            };
+            }
             &--completed {
               opacity: 1;
               background: $green-action;
@@ -53,14 +53,25 @@
           }
         }
       }
-      .tasklist__name {
+      .task__name {
         display: inline-block;
+        font-weight: $semibold;
+        color: $gray-strong;
+        @include font-size(16px);
       }
-      .tasklist__delete {
+      .task__author {
+        margin-top: 0;
+      }
+      .task__action {
         position: absolute;
         right: 45px;
         button {
           cursor: pointer;
+        }
+        .preloader--button {
+          height: 30px;
+          padding-top: 4px;
+          padding-bottom: 4px;
         }
       }
     }
