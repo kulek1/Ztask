@@ -11,10 +11,10 @@
         height: 100%;
         width: 100%;
         display: block;
-        padding: 10px;        
+        padding: 10px;
     }
     &:hover {
-      background: $gray-thin;
+      background: $gray-light;
     }
     &:not(:last-child) {
       border-bottom: 1px solid $gray;

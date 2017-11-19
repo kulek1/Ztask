@@ -26,7 +26,7 @@ const authActions = {
         })
         window.localStorage.setItem('authUser', JSON.stringify(authUser))
         await commit('setAuthUser', authUser)
-        router.push({ name: 'TaskList' })
+        router.push({ name: 'TaskListView' })
       } catch (error) {
         commit(
           'setError',

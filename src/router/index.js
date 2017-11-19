@@ -19,7 +19,7 @@ export default new VueRouter({
       children: [
         {
           path: '/',
-          name: 'TaskList',
+          name: 'TaskListView',
           component: TaskListView,
           meta: {
             requiresAuth: true

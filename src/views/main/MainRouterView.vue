@@ -1,10 +1,9 @@
 <template>
   <div>
-    <main-sidebar @searchInput="searchArray($event)"/>
+    <Main-sidebar/>
     <div class="page">
-      <main-header @addRow="fireAddRow($event)"/>
-     <!-- <task-list v-if="!this.isSettingsWindow" :tasks="tasks"/> -->
-      <router-view @changeName="changeFullname($event) " @changeProfession="changeProfession($event) "/>
+      <Main-header/>
+      <router-view/>
   <loader></loader>
     </div>
   </div>
@@ -31,7 +30,7 @@ export default {
   methods: {
     ...mapActions(['setFullname', 'setProfession', 'setError']),
     ...mapActions('auth', ['setAuthUser']),
-    ...mapActions('task', ['setTasks', 'getUserTasks']),
+    ...mapActions('task', ['getUserTasks']),
     getAccountData () {
       this.setFullname(this.authUser.name)
       this.setProfession(this.authUser.profession)

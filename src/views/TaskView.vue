@@ -1,7 +1,16 @@
 <template>
-  <div class="task-view" v-if="!isLoading">
-    <section class="task-view__header" :class="{ 'task-view__header--done' : task.done }">
-      <div class="task-view__status" @click="markDone()">
+  <div
+    class="task-view"
+    v-if="!isLoading"
+  >
+    <section
+      class="task-view__header"
+      :class="{ 'task-view__header--done' : task.done }"
+    >
+      <div
+        class="task-view__status"
+        @click="markDone()"
+      >
         <i class="material-icons">done</i>
       </div>
       <div class="header__details">
@@ -20,56 +29,115 @@
       </div>
     </section>
     <section class="task-view__content">
+      <div class="content__description">
+        {{ task.description }}
+      </div>
       <div class="content__comments">
-comments
+        <ul class="comments__list">
+          <li
+            v-for="item in comments"
+            :key="item.message"
+            class="comments__item"
+            >
+            <img
+              src="../assets/noavatar.png"
+              class="avatar"
+            >
+            <div class="item__container">
+              <div
+                class="author"
+                v-text="item.author"
+              >
+              </div>
+              <div
+                class="comment"
+                v-text="item.message"
+              ></div>
+            </div>
+          </li>
+        </ul>
       </div>
       <div class="content__write-comment">
         <div class="write-comment__container">
-        <img src="../assets/noavatar.png" class="avatar">
-        <textarea class="write-comment__textarea" placeholder="Write a comment"></textarea>
+          <img
+            src="../assets/noavatar.png"
+            class="avatar"
+          >
+          <textarea
+            class="write-comment__textarea"
+            placeholder="Write a comment"
+            v-model="commentText"
+          ></textarea>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="sendComment()"
+          >Send
+          </button>
         </div>
       </div>
     </section>
   </div>
-  </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
 
-export default {
-  name: 'TaskView',
-  data () {
-    return {
-      task: []
-    }
-  },
-  computed: {
-    ...mapState(['isLoading']),
-    ...mapState('auth', ['authUser']),
-    ...mapState('task', ['tasks'])
-  },
-  methods: {
-    ...mapActions(['setLoading']),
-    ...mapActions('task', ['getUserTasks', 'setTaskDone']),
-
-    markDone () {
-      const task = {
-        uuid: this.task.uuid,
-        done: this.task.done
+  export default {
+    name: 'TaskView',
+    data () {
+      return {
+        task: [],
+        commentText: '',
+        comments: []
       }
-      this.setTaskDone(task)
+    },
+    sockets: {
+      task_comment: function (data) {
+        this.comments.push({message: data.message, authorId: data.authorId, author: data.author})
+      },
+      customEmit: function (val) {
+        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      }
+    },
+    computed: {
+      ...mapState(['isLoading']),
+      ...mapState('auth', ['authUser']),
+      ...mapState('task', ['tasks'])
+    },
+    methods: {
+      ...mapActions(['setLoading']),
+      ...mapActions('task', ['getUserTasks', 'setTaskDone']),
+
+      markDone () {
+        const task = {
+          uuid: this.task.uuid,
+          done: this.task.done
+        }
+        this.setTaskDone(task)
+      },
+      sendComment () {
+        if (this.commentText !== '') {
+          this.$socket.emit('send', {
+            room: this.task.uuid,
+            message: this.commentText,
+            authorId: this.authUser.id,
+            author: this.authUser.name
+          })
+          this.commentText = ''
+        }
+      }
+    },
+    async created () {
+      this.setLoading(true)
+      const USER_ID = this.authUser.id
+      const uuid = this.$route.params.uuid
+      if (!this.tasks.length) {
+        await this.getUserTasks(USER_ID)
+      }
+      this.task = this.tasks.find(item => item.uuid === uuid)
+      this.setLoading(false)
+      this.$socket.emit('subscribe', this.task.uuid)
     }
-  },
-  async created () {
-    this.setLoading(true)
-    const USER_ID = this.authUser.id
-    const uuid = this.$route.params.uuid
-    if (!this.tasks.length) {
-      await this.getUserTasks(USER_ID)
-    }
-    this.task = this.tasks.find(item => item.uuid === uuid)
-    this.setLoading(false)
   }
-}
 </script>

@@ -2,12 +2,15 @@
   position: absolute;
   height: 100%;
   width: 300px;
-  border-right: 1px solid $gray-thin;
+  border-right: 1px solid $gray-light;
   text-align: center;
-
   &__action-buttons {
     margin: 40px 20px 10px;
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    .list {
+      @include font-size(26px);
+    }
     a {
       color: $gray;
       transition: all 0.3s ease-in-out;
@@ -57,49 +60,56 @@
     margin-top: 40px;
   }
   &__filterbox {
-    margin: 40px 80px;
+    margin: 40px 20px;
     .filterbox__header {
       padding: 8px 0;
+      border-bottom: 1px solid $gray-light;
     }
     ul {
       list-style: none;
       margin: 0;
       padding: 0;
+      text-align: left;
       li {
         position: relative;
-        border-radius: 1rem;
         font-size: 0.9285rem;
         margin-top: 8px;
-        padding: 5px 0 7px;
-        border: 1px solid #fff;
+        padding-left: 2rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
         transition: all 0.2s ease-in-out;
-        color: #fff;
         cursor: pointer;
+        &:before {
+          content: '\E061';
+          font-family: 'Material Icons';
+          margin-right: 1rem;
+          vertical-align: bottom;
+        }
         &:hover {
-          color: #fff;
+          background: $gray-light;
         }
         &.active {
-          color: #fff;
+          font-weight: $semibold;
           &::before {
             font-family: 'Material Icons';
             content: '\E876';
-            position: absolute;
-            left: 12px;
-            top: 4.5px;
-            font-size: 1rem;
+            font-weight: $bold;
           }
         }
         &.danger {
-          border-color: $red;
-          background: $red;
+          &:before {
+            color: $red;
+          }
         }
         &.warning {
-          border-color: $yellow;
-          background: $yellow;
+          &:before {
+            color: $yellow;
+          }
         }
         &.info {
-          border-color: $blue;
-          background: $blue;
+          &:before {
+            color: $blue;
+          }
         }
       }
     }

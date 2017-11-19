@@ -3,15 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import BootstrapVue from 'bootstrap-vue'
 import store from './store/'
-
-Vue.config.productionTip = false
-
+import VueSocketio from 'vue-socket.io'
+import { socketDomain } from '../env'
 // CSS styles
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sass/main.scss'
+
+Vue.use(VueSocketio, socketDomain, store);
+Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
@@ -23,8 +24,9 @@ router.beforeEach((to, from, next) => {
         name: 'Login'
       })
     }
+  } else {
+    next()
   }
-  next()
 })
 /* eslint-disable no-new */
 new Vue({
@@ -33,6 +35,6 @@ new Vue({
   store,
   template: '<App/>',
   components: {
-    App,
+    App
   }
 })

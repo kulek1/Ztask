@@ -1,4 +1,6 @@
 .task-view {
+  overflow: auto;
+  height: calc(100% - 210px);
   &__header {
     width: 100%;
     padding: 2rem;
@@ -9,6 +11,9 @@
       margin-top: 0;
       font-weight: $light;
       color: #fff;
+      @media screen and (max-width: 960px) {
+        @include font-size(24px);
+      }
     }
     p {
       color: $gray-strong;
@@ -23,7 +28,7 @@
         &:first-child {
           padding-bottom: 0.5rem;
         }
-        > .material-icons {
+        >.material-icons {
           padding-right: 0.5rem;
           vertical-align: bottom;
         }
@@ -45,6 +50,7 @@
   &__status {
     width: 50px;
     height: 50px;
+    min-width: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -57,37 +63,75 @@
       border-color: $green-action;
       background: $green-action;
     }
-    > .material-icons {
+    >.material-icons {
       color: #fff;
     }
   }
   &__content {
+    background: #f6f6f6;
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid $gray;
+      padding: 4px;
+    }
+    .content__description {
+      margin-left: 2rem;
+      margin-right: 2rem;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px dashed #e9e9e9;
+    }
     .content__write-comment {
       position: absolute;
       bottom: 0;
       width: 100%;
-      .avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 1px solid $gray;
-        padding: 4px;
-        margin-right: 1rem;
-      }
       .write-comment {
         &__container {
           display: flex;
           padding: 2rem;
         }
         &__textarea {
+          margin-left: 1rem;
+          margin-right: 1rem;
           width: 100%;
+          border: 1px solid $gray;
           border-radius: 4px;
           padding: 1rem;
           transition: 0.2s all ease;
           &:focus {
             outline: 0;
-            border: 1px solid $green-action;
+            border-color: $green-action;
           }
+        }
+      }
+    }
+    .comments {
+      &__list {
+        margin: 0;
+        padding: 2rem;
+      }
+      &__item {
+        display: flex;
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9e9e9;
+        &:last-child {
+          margin-bottom: 0;
+        }
+        .avatar {
+          border: none;
+          display: block;
+        }
+        .author {
+          font-weight: $semibold;
+        }
+        .comment {
+          word-break: break-all
+        }
+        .item__container {
+          margin-left: 1rem;
         }
       }
     }

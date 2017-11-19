@@ -13,100 +13,116 @@
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     &:hover {
-        background: #fff;
-        color: #202020;
+      background: #fff;
+      color: #202020;
     }
     &:focus {
-        box-shadow: none;
+      box-shadow: none;
     }
     &.btn-solid {
-        background: #fff;
-        color: #202020;
-        }
+      background: #fff;
+      color: #202020;
     }
-    &.btn-loading {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    } 
-    input {
-        background: transparent;
-        border: 0;
-        border-bottom: 1px solid #48a55b;
-        border-radius: 0;
-        color: #fff;
-        &:hover, &:focus {
-            background: transparent;
-            border-color: #fff;
-        }
+  }
+  &.btn-loading {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  input {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid $auth-color;
+    border-radius: 0;
+    color: #fff;
+    &:hover,
+    &:focus {
+      background: transparent;
+      border-color: #fff;
     }
-    > .row {
-        height: 100%;
-       [class*="col-"] {
-           padding: 0;
-       }
+  }
+  >.row {
+    height: 100%;
+    [class*="col-"] {
+      padding: 0;
+    }
+  }
+  .auth-content__center {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100%;
+    color: #fff;
+  }
+  .welcome {
+    &__subtitle {
+      color: $auth-color;
+      width: 80%;
+    }
+  }
+  &__left {
+    background: linear-gradient(to bottom, #192e33, #202020);
+    height: 100%;
+    .auth-content__center {
+      margin-left: 60px;
+      h1 {
+        font-weight: 300;
+        font-size: 3rem;
+      }
+      h4 {
+        font-weight: 300;
+      }
+      .buttons {
+        margin-top: 40px;
+        button:first-child {
+          margin-right: 15px;
+        }
+      }
+    }
+  }
+  &__right {
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(25, 46, 51, 0.90), rgba(32, 32, 32, 0.90));
+    a {
+      color: #fff;
+    }
+    .form__title {
+      font-weight: $light;
+    }
+    .form__buttons {
+      margin-top: 2rem;
+    }
+    .form__forgot {
+      margin-left: 1rem;
     }
     .auth-content__center {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        height: 100%;
-        color: #fff;
-    }
-    &__left {
-        background: #202020;
-        height: 100%;
-
-        .auth-content__center {
-            margin-left: 60px;
-            h1 {
-                font-weight: 300;
-                font-size: 3rem;
-            }
-            h4 {
-                font-weight: 300;
-            }
-
-            .buttons {
-                margin-top: 40px;
-                button:first-child {
-                    margin-right: 15px;
-                }
-            }
+      justify-content: center;
+      padding: 0 20px;
+      p {
+        color: $auth-color;
+      }
+      form {
+        margin-top: 40px;
+        input {
+          &::-webkit-input-placeholder {
+            color: $auth-color;
+          }
+          &:focus {
+            color: #fff;
+          }
         }
-    }
-    &__right {
-        background: $green-action;
-        height: 100%;
-        .auth-content__center {
-            justify-content: center;
-            padding: 0 20px;
-            p {
-                color: #3f7a4b;
-            }
-            form {
-                margin-top: 40px;
-                input {
-                    &::-webkit-input-placeholder {
-                        color:#3b7646;
-                    }
-                    &:focus {
-                        color: #fff;
-                    }
-                }
-                .btn-login {
-                    background: #3b7646;
-                    border-color: #3b7646;
-                    color: #fff;
-                    position: relative;
-                    min-height: 50px;
-                }
-            }
-            .alert {
-                margin-top: 15px;
-                text-align: center;
-                @include font-size(13px);
-            }
+        .btn-login {
+          background: $auth-color;
+          border-color: $auth-color;
+          color: #fff;
+          position: relative;
+          min-height: 50px;
         }
+      }
+      .alert {
+        margin-top: 15px;
+        text-align: center;
+        @include font-size(13px);
+      }
     }
+  }
 }
-

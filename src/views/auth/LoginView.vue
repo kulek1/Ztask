@@ -10,8 +10,8 @@
                 <h4>Getting started is only a few clicks away</h4>
 
                 <div class="buttons">
-                  <button class="btn">Learn more</button>
-                  <button class="btn btn-solid">Register</button>
+                  <button type="button" class="btn">Learn more</button>
+                  <button type="button" class="btn btn-solid">Register</button>
                 </div>
               </div>
             </div>
@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import { clientId, clientSecret } from '@/../env';
-import { mapState, mapActions } from 'vuex';
+import { clientId, clientSecret } from '@/../env'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'LoginView',
@@ -59,7 +59,7 @@ export default {
         username: 'mati.798@hotmail.com',
         password: 'password'
       }
-    };
+    }
   },
   computed: {
     ...mapState(['isLoading', 'isError', 'errorFeedback'])
@@ -68,7 +68,7 @@ export default {
     ...mapActions(['setLoading']),
     ...mapActions('auth', ['getAuthUser']),
     loginFormSubmit () {
-      this.setLoading(true);
+      this.setLoading(true)
       const postData = {
         grant_type: 'password',
         client_id: clientId,
@@ -76,10 +76,10 @@ export default {
         username: this.credentials.username,
         password: this.credentials.password,
         scope: ''
-      };
-      this.getAuthUser(postData);
+      }
+      this.getAuthUser(postData)
     }
   }
-};
+}
 </script>
 
