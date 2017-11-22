@@ -4,14 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/'
-import VueSocketio from 'vue-socket.io'
-import { socketDomain } from '../env'
 // CSS styles
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './sass/main.scss'
 
-Vue.use(VueSocketio, socketDomain, store);
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {

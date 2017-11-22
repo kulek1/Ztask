@@ -95,7 +95,12 @@
       }
     },
     methods: {
-      ...mapActions('task', ['addTask', 'removeTask', 'setTaskDone']),
+      ...mapActions('task', [
+        'addTask',
+        'removeTask',
+        'setTaskDone'
+      ]),
+
       submitForm () {
         if (this.newTaskName !== '') {
           const USER_ID = this.authUser.id
@@ -137,9 +142,16 @@
       }
     },
     computed: {
-      ...mapState(['user', 'isSound']),
-      ...mapState('auth', ['authUser']),
-      ...mapState('task', ['tasks', 'isCreatingNewTask']),
+      ...mapState(['user',
+        'isSound'
+      ]),
+      ...mapState('auth', [
+        'authUser'
+      ]),
+      ...mapState('task', [
+        'tasks',
+        'isCreatingNewTask'
+      ]),
 
       filteredTasks () {
         const sortedTasks = this.tasks.sort((a, b) => {

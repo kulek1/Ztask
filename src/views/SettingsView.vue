@@ -51,16 +51,20 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    props: ['fullName', 'profession'],
     methods: {
-      ...mapActions(['setFullname', 'setProfession'])
+      ...mapActions([
+        'setFullname',
+        'setProfession'
+      ])
     },
     computed: {
       ...mapState({
         authStore: state => state.authStore,
         mainStore: state => state.mainStore
       }),
-      ...mapState(['user']),
+      ...mapState([
+        'user'
+      ]),
       changeFullname: {
         get: function () {
           return this.user.fullName

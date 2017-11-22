@@ -1,5 +1,6 @@
 const taskState = {
   tasks: [],
+  comments: [],
   isCreatingNewTask: false
 }
 

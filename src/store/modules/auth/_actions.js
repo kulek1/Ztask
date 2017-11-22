@@ -3,7 +3,7 @@ import { loginUrl, userUrl, getHeader } from '@/auth/config'
 import router from '@/router'
 
 const authActions = {
-  async getAuthUser({ commit }, postData) {
+  async getAuthUser ({ commit }, postData) {
     let authUser
     try {
       // get tokens
@@ -38,21 +38,23 @@ const authActions = {
         )
       }
     } catch (error) {
-      commit(
-        'setError',
-        {
-          isError: true,
-          code: error.response.status
-        },
-        { root: true }
-      )
+      const data = {
+        isError: true,
+        code: ''
+      };
+      if (error.response) {
+        data.code = error.response.status
+      } else {
+        data.code = 0
+      }
+      commit('setError', data, { root: true })
     }
     commit('setLoading', false, { root: true })
   },
-  setAuthUser({ commit }, user) {
+  setAuthUser ({ commit }, user) {
     commit('setAuthUser', user)
   },
-  clearAuthUser({ commit }) {
+  clearAuthUser ({ commit }) {
     commit('clearAuthUser')
   }
 }

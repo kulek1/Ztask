@@ -1,7 +1,6 @@
-import Vue from 'Vue'
 import notificationSound from '@/assets/notification.mp3'
 const taskMutations = {
-  setTasks(state, tasks) {
+  setTasks (state, tasks) {
     // if host is on Linux with old mysql driver
     let arrayLength = tasks.length
     if (arrayLength > 0) {
@@ -14,14 +13,24 @@ const taskMutations = {
     }
     state.tasks = tasks
   },
-  setTaskDone(state, uuid) {
+  setComments (state, data) {
+    state.comments = data;
+  },
+  addComment (state, data) {
+    state.comments.push(data)
+  },
+  removeComment (state, data) {
+    const index = state.comments.findIndex(x => x.uuid === data.uuid)
+    state.comments.splice(index, 1)
+  },
+  setTaskDone (state, uuid) {
     const index = state.tasks.findIndex(item => item.uuid === uuid)
     state.tasks[index].done = !state.tasks[index].done
   },
-  addRow(state) {
+  addRow (state) {
     state.isCreatingNewTask = true
   },
-  addTask(state, data) {
+  addTask (state, data) {
     if (data.isSound) {
       let audio = new Audio(notificationSound)
       audio.play()
@@ -38,7 +47,7 @@ const taskMutations = {
     })
     state.isCreatingNewTask = false
   },
-  removeTask(state, data) {
+  removeTask (state, data) {
     state.tasks.splice(data.index, 1)
   }
 }

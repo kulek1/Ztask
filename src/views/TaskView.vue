@@ -54,6 +54,12 @@
                 v-text="item.message"
               ></div>
             </div>
+            <div class="item__actions">
+              <i
+                class="material-icons"
+                @click="fireDeleteComment(item.uuid)"
+              >close</i>
+            </div>
           </li>
         </ul>
       </div>
@@ -88,26 +94,37 @@
     data () {
       return {
         task: [],
-        commentText: '',
-        comments: []
+        commentText: ''
       }
     },
     sockets: {
       task_comment: function (data) {
         this.comments.push({message: data.message, authorId: data.authorId, author: data.author})
-      },
-      customEmit: function (val) {
-        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
       }
     },
     computed: {
-      ...mapState(['isLoading']),
-      ...mapState('auth', ['authUser']),
-      ...mapState('task', ['tasks'])
+      ...mapState([
+        'isLoading'
+      ]),
+      ...mapState('auth', [
+        'authUser'
+      ]),
+      ...mapState('task', [
+        'tasks',
+        'comments'
+      ])
     },
     methods: {
-      ...mapActions(['setLoading']),
-      ...mapActions('task', ['getUserTasks', 'setTaskDone']),
+      ...mapActions([
+        'setLoading'
+      ]),
+      ...mapActions('task', [
+        'getUserTasks',
+        'setTaskDone',
+        'getComments',
+        'addComment',
+        'deleteComment'
+      ]),
 
       markDone () {
         const task = {
@@ -116,28 +133,36 @@
         }
         this.setTaskDone(task)
       },
-      sendComment () {
+      async sendComment () {
         if (this.commentText !== '') {
-          this.$socket.emit('send', {
-            room: this.task.uuid,
+          const data = {
             message: this.commentText,
             authorId: this.authUser.id,
-            author: this.authUser.name
-          })
+            author: this.authUser.name,
+            task_uuid: this.task.uuid
+          }
+          await this.addComment(data)
           this.commentText = ''
         }
+      },
+      async fireDeleteComment (commentUuid) {
+        await this.deleteComment({
+          uuid: commentUuid,
+          task_uuid: this.$route.params.uuid
+        })
       }
     },
     async created () {
       this.setLoading(true)
       const USER_ID = this.authUser.id
       const uuid = this.$route.params.uuid
+
       if (!this.tasks.length) {
         await this.getUserTasks(USER_ID)
       }
       this.task = this.tasks.find(item => item.uuid === uuid)
+      await this.getComments(uuid);
       this.setLoading(false)
-      this.$socket.emit('subscribe', this.task.uuid)
     }
   }
 </script>
