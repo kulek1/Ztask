@@ -1,11 +1,11 @@
-![Header](http://ztask.mkulinski.pl/github-kulek1.jpg)
+![Header](https://ztask.mkulinski.com/github-kulek1.jpg)
 # Ztask
 
 > Development version of single-page application where you can manage tasks with your coworkers. 
 It's been written in Vue.js 2.0
 
 ### Live demo
-Check out the demo here: [Link](http://www.ztask.mkulinski.pl)
+Check out the demo here: [Link](https://ztask.mkulinski.com)
 
 ## Tech Stack
 
