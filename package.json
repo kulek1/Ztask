@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "bootstrap-vue": "^1.0.0-beta.9",
+    "bootstrap-vue": "^2.0.0-rc.12",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "jwt-decode": "^2.2.0",
